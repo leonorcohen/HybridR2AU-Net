@@ -18,6 +18,7 @@ The Hybrid R2AU-Net adopts Recurrent Residual Blocks (RecRes Blocks), replacing 
 
 ![alt text](/images/RecResBlock.png)
 
+
 ## Additional Information
 The Hybrid R2AU-Net was built with Python programming using Tensorflow (version 2.4.0) and Keras (version 2.10.0) frameworks.
 Some functions used for the evaluation of the Hybrid R2AU-Net were inspired by the MultiResUNet repository - [See this GitHub Page](https://github.com/nibtehaz/MultiResUNet/tree/master).
