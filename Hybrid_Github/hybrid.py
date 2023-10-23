@@ -1,13 +1,10 @@
 import tensorflow as tf
-
-
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, UpSampling2D, BatchNormalization, Reshape, Permute, Activation, Input, add, multiply
 from tensorflow.keras.layers import concatenate, Dropout, Lambda
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.optimizers import SGD
 import tensorflow.keras.backend as K
-
 from evaluation import *
 
 def up_and_concate(down_layer, layer, data_format='channels_first'):
@@ -29,28 +26,18 @@ def up_and_concate(down_layer, layer, data_format='channels_first'):
     return concate
 
 def attention_block_2d(x, g, inter_channel, data_format='channels_last'):
-    # theta_x(?,g_height,g_width,inter_channel)
-
+    # Transformation of Input Feature Maps
     theta_x = Conv2D(inter_channel, [1, 1], strides=[1, 1], data_format=data_format)(x)
-
-    # phi_g(?,g_height,g_width,inter_channel)
-
     phi_g = Conv2D(inter_channel, [1, 1], strides=[1, 1], data_format=data_format)(g)
 
-    # f(?,g_height,g_width,inter_channel)
-
+    # Interaction
     f = Activation('relu')(add([theta_x, phi_g]))
 
-    # psi_f(?,g_height,g_width,1)
-
+    # Calculation of the attention rates
     psi_f = Conv2D(1, [1, 1], strides=[1, 1], data_format=data_format)(f)
-
     rate = Activation('sigmoid')(psi_f)
 
-    # rate(?,x_height,x_width)
-
-    # att_x(?,x_height,x_width,x_channel)
-
+    # Creation of attended feature map
     att_x = multiply([x, rate])
 
     return att_x
@@ -61,7 +48,6 @@ def attention_up_and_concate(down_layer, layer, data_format='channels_last'):
     else:
         in_channel = down_layer.get_shape().as_list()[3]
 
-    # up = Conv2DTranspose(out_channel, [2, 2], strides=[2, 2])(down_layer)
     up = UpSampling2D(size=(2, 2), data_format=data_format)(down_layer)
 
     layer = attention_block_2d(x=layer, g=up, inter_channel=in_channel // 4, data_format=data_format)
@@ -73,7 +59,6 @@ def attention_up_and_concate(down_layer, layer, data_format='channels_last'):
 
     concate = my_concat([up, layer])
     return concate
-
 
 
 def res_block(input_layer, out_n_filters, batch_normalization=False, kernel_size=[3, 3], stride=[1, 1],
@@ -166,9 +151,6 @@ def conv2d_bn(x, filters, num_row, num_col, padding='same', strides=(1, 1), acti
     x = Activation(activation, name=name)(x)
 
     return x
-
-
-
 
 def hybrid(pretrained_weights = None, input_size = (512,640,1), n_label = 1, data_format='channels_last'):
     inputs = Input(input_size)
