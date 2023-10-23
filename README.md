@@ -12,4 +12,4 @@ The Hybrid R2AU-Net was designed to perform the segmentation of ultrasound spine
 ## The Hybrid R2AU-Net architecture
 The Hybrid R2AU-Net adopts the foundational U-Net framework, renowned for its effectiveness in segmentation tasks. However, several enhancements have been introduced to elevate its performance. These modifications include the integration of attention mechanisms and RecRes Blocks, strategically positioned to capture and leverage spatial dependencies within the image data. Furthermore, dense connections were introduced to bridge the semantic gap between the encoder and decoder. The architecture of the proposed model is shown below.
 
-![Alt](/images/Hybrid.pdf)
+![alt text](/images/Hybrid.png)
