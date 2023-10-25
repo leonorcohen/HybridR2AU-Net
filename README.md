@@ -5,7 +5,7 @@ Hybrid Attention Recurrent Residual U-Net for the Segmentation of Ultrasound Spi
 
 
 ## Dataset
-The Hybrid R2AU-Net was designed to perform the segmentation of ultrasound spine images. The ultrasound spine image dataset is not publicly available but the Hybrid can also be used for other imaging datasets if the following recommendations are followed:
+The Hybrid R2AU-Net was designed to perform the segmentation of ultrasound spine images. The ultrasound spine image dataset is not publicly available but the Hybrid R2AU-Net can also be used for other imaging datasets if the following recommendations are followed:
 - The full dataset is allocated to the "data"  folder.
 - The input size is changed according to the dataset dimensions.
 
